@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CekFail
 
-## Getting Started
+CekFail started from a simple curiosity while playing CTF challenges and exploring file forensics. During competitions and practice sessions, I often needed to inspect hashes, extract strings, check suspicious indicators, or quickly view hexadecimal data from files. The problem was that most of these tasks required switching between multiple different tools and websites.
 
-First, run the development server:
+At some point, I started thinking:
+
+“What if I just build a single website that makes this easier for my friends and other learners?”
+
+I know there are already many forensic and analysis tools available online, but constantly searching for different websites can interrupt workflow and slow down learning. So instead of relying on separate platforms, I decided to combine the most useful features into one.
+
+That idea became CekFail(Check File) a web based forensic file analyzer focused on simplicity and usability. The goal is not to replace professional forensic software, but to create a lightweight platform where users can quickly inspect uploaded files, view hashes, analyze strings, detect suspicious keywords, and explore hex data in a clean interface.
+
+This project is also part of my journey in learning cybersecurity, web development, and digital forensics through building something practical and useful for the community.
+---
+
+## Features
+
+* File upload and analysis
+* MD5, SHA1, and SHA256 hash generation
+* MIME type detection
+* Real file type detection
+* Suspicious keyword detection
+* Extracted strings viewer
+* Hex viewer with ASCII preview
+* Copy hash values instantly
+
+---
+
+## Tech Stack
+
+* Next.js 16
+* React
+* TypeScript
+* Tailwind CSS
+* tsParticles
+* Lucide React
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/cekfail.git
+```
+
+Enter the project folder:
+
+```bash
+cd cekfail
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```txt
+app/
+ ├── api/
+ │    └── scan/
+ ├── components/
+ │    ├── navbar.tsx
+ │    └── particleBackground.tsx
+ ├── result/
+ │    └── page.tsx
+ ├── layout.tsx
+ └── page.tsx
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Current Analysis Capabilities
 
-## Deploy on Vercel
+### Hashing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* MD5
+* SHA1
+* SHA256
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### String Extraction
+
+Extracts printable strings from uploaded files.
+
+### Suspicious Indicators
+
+Detects keywords related to:
+
+* Execution
+* Networking
+* Persistence
+* Credentials
+* Malware
+* Evasion
+
+### Hex Viewer
+
+Displays:
+
+* Hexadecimal bytes
+* Offsets
+* ASCII preview
+
+---
+
+## Future Improvements
+
+* Entropy analysis
+* YARA rule support
+* VirusTotal integration
+* PE header analysis
+* ELF analysis
+* APK analysis
+* Drag and drop improvements
+* File history
+* Scan report export
+
+---
+
