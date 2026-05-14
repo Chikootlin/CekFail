@@ -77,33 +77,35 @@ export default function Result(){
         <>
             <div className="relative min-h-screen">
                 <ParticleBackground/>
-                <div className="relative z-10 mx-auto flex max-w-7xl flex-col px-6 pb-20">
+                <div className="relative z-10 mx-auto flex max-w-7xl flex-col px-6 pb-20 sm:px-6 lg:px-8">
                         <div className="flex items-start justify-between">
-                            <Link href={"/"} className="text-xl">
+                            <Link href={"/"} className="text-base sm:text-xl">
                                 &lt;- Back
                             </Link>
                             <div className="text-right">
-                                <h1 className="text-xl font-bold">
+                                <h1 className="text-lg font-bold sm:text-xl">
                                     Analysis Result
                                 </h1>
-                                <p className="text-sm text-[#AEAEAE] mt-1">
+                                <p className="text-xs text-[#AEAEAE] mt-1 sm:text-sm">
                                     Completed in {data.scanTime}s
                                 </p>
                             </div>
                         </div>
-                    <div className="mt-10 grid grid-cols-2 gap-6">
-                        <div className="rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-6">
-                            <div className="flex items-center gap-4 text-white font-bold text-md">
-                                <FileText className="w-5 h-5"/>
-                                <span>File Information</span>
+                    <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                        <div className="rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-4 sm:p-6">
+                            <div className="flex items-center gap-4 text-white text-sm sm:text-md">
+                                <FileText className="w-5 h-5 shrink-0"/>
+                                <span className="text-sm sm:text-base">
+                                    File Information
+                                </span>
                             </div>
-                            <div className="grid grid-cols-2 gap-6 mt-4">
-                                <div className="space-y-4 mt-4">
+                            <div className="flex flex-col  sm:grid sm:grid-cols-2 sm:gap-6 gap-4 mt-4">
+                                <div className="space-y-4">
                                     <div>
                                         <p className="text-xs text-[#AEAEAE]">
                                             File Name
                                         </p>
-                                        <p className="text-sm text-white">
+                                        <p className="break-all text-sm text-white">
                                             {data?.fileName}
                                         </p>
                                     </div>
@@ -119,17 +121,17 @@ export default function Result(){
                                         <p className="text-xs text-[#AEAEAE]">
                                             Real Type
                                         </p>
-                                        <p className="text-sm text-white">
+                                        <p className="break-all text-sm text-white">
                                             {data?.realType}
                                         </p>
                                     </div>
                                 </div>
-                                <div className="space-y-4 mt-4">
+                                <div className="space-y-4">
                                     <div>
                                         <p className="text-xs text-[#AEAEAE]">
                                             MIME Type
                                         </p>
-                                        <p className="text-sm text-white">
+                                        <p className="break-all text-sm text-white">
                                             {data?.mimeType}
                                         </p>
                                     </div>
@@ -137,13 +139,50 @@ export default function Result(){
                             </div>
                         </div>
 
-                        <div className="rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-6">
-                            <div className="flex items-center gap-4 text-white font-bold text-md">
-                                <Hash className="w-5 h-5"/>
-                                <span>Hash Values</span>
+                        <div className="rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-4 sm:p-6">
+                            <div className="flex items-center gap-4 text-white">
+                                <Hash className="w-5 h-5 shrink-0"/>
+                                <span className="text-sm sm:text-base">
+                                    Hash Values
+                                </span>
                             </div>
                             <div className="space-y-5 mt-6">
-                                <div>
+                                {[
+                                    {
+                                        label: "MD5",
+                                        value: data.hashes.md5,
+                                        type: "md5",
+                                    },
+                                    {
+                                        label: "SHA1",
+                                        value: data.hashes.sha1,
+                                        type: "sha1",
+                                    },
+                                    {
+                                        label: "SHA256",
+                                        value: data.hashes.sha256,
+                                        type: "sha256",
+                                    },
+                                ].map((hash) => (
+                                    <div key={hash.type}>
+                                        <p className="mb-1 text-xs text-[#AEAEAE]">
+                                            {hash.label}
+                                        </p>
+                                        <div className="relative w-full rounded-lg bg-[#1F283B] py-2">
+                                            <p className="truncate pr-10 pl-4 text-xs">
+                                                {hash.value}
+                                            </p>
+                                            <button onClick={() => copyToClipboard(hash.value, hash.type)} className="absolute right-1 top-1/2 -translate-y-1/2 rounded-md p-1.5 text-[#AEAEAE] transition-all duration-200 hover:bg-[#88C1D1]/10 hover:text-[#88C1D1] active:scale-95 cursor-pointer">
+                                                {copied === hash.type ? (
+                                                    <Check className="h-4 w-4"/>
+                                                ) : (
+                                                    <Copy className="h-4 w-4"/>
+                                                )}
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                                {/* <div>
                                     <p className="text-xs text-[#AEAEAE] mb-1">
                                         MD5
                                     </p>
@@ -193,15 +232,17 @@ export default function Result(){
                                             )}
                                         </button>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-6 rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-6">
-                        <div className="flex items-center gap-4">
-                            <Code className="w-4 h-4"/>
-                            <span>Strings</span>
+                    <div className="mt-6 rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-4 sm:p-6">
+                        <div className="flex items-center gap-4 text-white">
+                            <Code className="w-4 h-4 shrink-0"/>
+                            <span className="text-sm sm:text-base">
+                                Strings
+                            </span>
                         </div>
                         <div className="mt-6 bg-[#1F283B] rounded-lg p-4">
                             <div className="max-h-75 overflow-y-auto space-y-1">
@@ -220,10 +261,12 @@ export default function Result(){
                         </div>
                     </div>
 
-                    <div className="mt-6 rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-6">
-                        <div className="flex items-center gap-4">
-                            <TriangleAlert className="w-4 h-4"/>
-                            <span>Suspicious Strings</span>
+                    <div className="mt-6 rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-4 sm:p-6">
+                        <div className="flex items-center gap-4 text-white">
+                            <TriangleAlert className="w-4 h-4 shrink-0"/>
+                            <span className="text-sm sm:text-base">
+                                Suspicious Strings
+                            </span>
                         </div>
                         <div className="mt-6 bg-[#1F283B] rounded-lg p-4">
                             <div className="max-h-75 overflow-y-auto space-y-1">
@@ -247,13 +290,15 @@ export default function Result(){
                         </div>
                     </div>
 
-                    <div className="mt-6 rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-6">
-                        <div className="flex items-center gap-4">
-                            <Hexagon className="w-4 h-4"/>
-                            <span>Hex</span>
+                    <div className="mt-6 rounded-xl border border-[#88C1D1]/40 bg-[#101926] p-4 sm:p-6">
+                        <div className="flex items-center gap-4 text-white">
+                            <Hexagon className="w-4 h-4 shrink-0"/>
+                            <span className="text-xs sm:text-base">
+                                Hex
+                            </span>
                         </div>
-                        <div className="mt-6 bg-[#1F283B] rounded-lg p-4">
-                            <div className="max-h-75 overflow-y-auto space-y-1">
+                        <div className="mt-6 overflow-x-auto bg-[#1F283B] rounded-lg p-4">
+                            <div className="max-h-75 min-w-175 overflow-y-auto space-y-1">
                                 {Array.from(
                                     {
                                         length: Math.ceil(
@@ -272,19 +317,17 @@ export default function Result(){
                                         }).join("");
 
                                         return (
-                                            <>
-                                                <p key={i} className="flex text-xs font-mono text-[#AEAEAE] whitespace-pre tracking-wide">
-                                                    <span className="text-[#88C1D1] mr-4 shrink-0">
-                                                        {(i * 16).toString(16).padStart(8, "0").toUpperCase()}
-                                                    </span>
-                                                    <span className="tracking-wide">
-                                                        {chunk.map((h) => h.toUpperCase()).join(" ").padEnd(47, " ")}
-                                                    </span>
-                                                    <span className="ml-6 text-[#7F8CA3]">
-                                                        {ascii}
-                                                    </span>
-                                                </p>
-                                            </>
+                                            <p key={i} className="flex text-xs font-mono text-[#AEAEAE] whitespace-pre tracking-wide">
+                                                <span className="text-[#88C1D1] mr-4 shrink-0">
+                                                    {(i * 16).toString(16).padStart(8, "0").toUpperCase()}
+                                                </span>
+                                                <span className="tracking-wide">
+                                                    {chunk.map((h) => h.toUpperCase()).join(" ").padEnd(47, " ")}
+                                                </span>
+                                                <span className="ml-6 text-[#7F8CA3]">
+                                                    {ascii}
+                                                </span>
+                                            </p>
                                         );
                                     }
                                 )}
