@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative min-h-screen md:min-h-0 overflow-hidden">
         <ParticleBackground/>
         <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold sm:text-4xl md:text-4xl">

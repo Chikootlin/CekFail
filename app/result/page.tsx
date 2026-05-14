@@ -75,7 +75,7 @@ export default function Result(){
 
     return (
         <>
-            <div className="relative min-h-screen">
+            <div className="relative min-h-screen md:min-h-0 overflow-hidden">
                 <ParticleBackground/>
                 <div className="relative z-10 mx-auto flex max-w-7xl flex-col px-6 pb-20 sm:px-6 lg:px-8">
                         <div className="flex items-start justify-between">
